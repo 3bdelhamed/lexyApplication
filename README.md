@@ -1,117 +1,163 @@
-POST /signup
+### **POST `/signup`**
 
-Description:
-تسجيل مستخدم جديد، بيعمل حساب في جدول Pending Users وبيبعت OTP لتأكيد الإيميل.
+**Description:**
+Registers a new user. This creates an account in a pending state and sends an OTP to the user's email for verification.
 
-Request Body:
+**Request Body:**
 
-name: string
-
-username: string
-
-email: string (email format)
-
-password: string
-
-role: User | Guardian
-
-birthdate: date
-
-Response:
-message: "user created success"
-user: {
- name, username, email, role, birthdate, confirmEmailOtp (hashed otp)
+```json
+{
+  "name": "string",
+  "username": "string",
+  "email": "string (email format)",
+  "password": "string",
+  "role": "User | Guardian",
+  "birthdate": "date"
 }
+```
 
-Errors:
-400: user already exists
-500: user not created
+**Success Response (200 OK):**
 
-=============================
+```json
+{
+  "message": "user created success",
+  "user": {
+    "name": "string",
+    "username": "string",
+    "email": "string",
+    "role": "string",
+    "birthdate": "date",
+    "confirmEmailOtp": "hashed_otp_string"
+  }
+}
+```
 
-POST /confirmEmail
+**Error Responses:**
 
-Description:
-تأكيد الإيميل باستخدام OTP.
+  * `400 Bad Request`: User already exists.
+  * `500 Internal Server Error`: User could not be created.
 
-Request Body:
+-----
 
-email: string (email format)
+### **POST `/confirmEmail`**
 
-otp: string (6 digits)
+**Description:**
+Confirms a new user's email address using the provided OTP.
 
-Response:
-message: "user loged in success"
-Credentials: { accessToken, refreshToken }
+**Request Body:**
 
-Errors:
-404: user not found
-400: otp is not valid
+```json
+{
+  "email": "string (email format)",
+  "otp": "string (6 digits)"
+}
+```
 
-=============================
+**Success Response (200 OK):**
 
-POST /login
+```json
+{
+  "message": "user loged in success",
+  "Credentials": {
+    "accessToken": "string",
+    "refreshToken": "string"
+  }
+}
+```
 
-Description:
-تسجيل الدخول لمستخدم موجود.
+**Error Responses:**
 
-Request Body:
+  * `404 Not Found`: User not found.
+  * `400 Bad Request`: The provided OTP is not valid.
 
-email: string (email format)
+-----
 
-password: string
+### **POST `/login`**
 
-Response:
-message: "user loged in success"
-Credentials: { accessToken, refreshToken }
+**Description:**
+Logs in an existing user with their email and password.
 
-Errors:
-404: user not found
-400: password is not valid
+**Request Body:**
 
-=============================
+```json
+{
+  "email": "string (email format)",
+  "password": "string"
+}
+```
 
-PATCH /forget-password
+**Success Response (200 OK):**
 
-Description:
-بيرسل OTP على الإيميل علشان المستخدم يقدر يعمل Reset للباسورد.
+```json
+{
+  "message": "user loged in success",
+  "Credentials": {
+    "accessToken": "string",
+    "refreshToken": "string"
+  }
+}
+```
 
-Request Body:
+**Error Responses:**
 
-email: string (email format)
+  * `404 Not Found`: User not found.
+  * `400 Bad Request`: The provided password is not valid.
 
-Response:
-message: "otp sent Success"
+-----
 
-Errors:
-404: user not found
+### **PATCH `/forget-password`**
 
-=============================
+**Description:**
+Initiates the password reset process by sending an OTP to the user's email.
 
-PATCH /reset-password
+**Request Body:**
 
-Description:
-تغيير كلمة المرور بعد ما المستخدم يدخل OTP اللي وصله على الإيميل.
+```json
+{
+  "email": "string (email format)"
+}
+```
 
-Request Body:
+**Success Response (200 OK):**
 
-email: string (email format)
+```json
+{
+  "message": "otp sent Success"
+}
+```
 
-otp: string (6 digits)
+**Error Responses:**
 
-password: string
+  * `404 Not Found`: User not found.
 
-confirmPassword: string
+-----
 
-Response:
-message: "password reset Success"
+### **PATCH `/reset-password`**
 
-Errors:
-404: user not found
-400: otp is invalid
-400: password and confirmPassword must be same
+**Description:**
+Sets a new password for the user after they provide a valid OTP.
 
+**Request Body:**
 
+```json
+{
+  "email": "string (email format)",
+  "otp": "string (6 digits)",
+  "password": "string",
+  "confirmPassword": "string"
+}
+```
 
-    "accessToken": "...",PATCH /forget-password
-✅ Description
+**Success Response (200 OK):**
+
+```json
+{
+  "message": "password reset Success"
+}
+```
+
+**Error Responses:**
+
+  * `404 Not Found`: User not found.
+  * `400 Bad Request`: The OTP is invalid.
+  * `400 Bad Request`: The `password` and `confirmPassword` fields must match.
