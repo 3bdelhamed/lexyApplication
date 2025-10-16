@@ -1,4 +1,6 @@
-POST /signup
+
+
+POST /api/auth/signup
 
 Description:
 تسجيل مستخدم جديد، بيعمل حساب في جدول Pending Users وبيبعت OTP لتأكيد الإيميل.
@@ -29,7 +31,7 @@ Errors:
 
 =============================
 
-POST /confirmEmail
+POST /api/auth/confirmEmail
 
 Description:
 تأكيد الإيميل باستخدام OTP.
@@ -50,7 +52,7 @@ Errors:
 
 =============================
 
-POST /login
+POST /api/auth/login
 
 Description:
 تسجيل الدخول لمستخدم موجود.
@@ -71,7 +73,7 @@ Errors:
 
 =============================
 
-PATCH /forget-password
+PATCH /api/auth/forget-password
 
 Description:
 بيرسل OTP على الإيميل علشان المستخدم يقدر يعمل Reset للباسورد.
@@ -88,7 +90,7 @@ Errors:
 
 =============================
 
-PATCH /reset-password
+PATCH /api/auth/reset-password
 
 Description:
 تغيير كلمة المرور بعد ما المستخدم يدخل OTP اللي وصله على الإيميل.
