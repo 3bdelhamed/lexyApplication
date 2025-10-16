@@ -1,7 +1,7 @@
 # Node
 node_modules/
-dist/
-build/
+# dist/
+# build/
 
 # Env
 .env
@@ -27,3 +27,4 @@ coverage/
 # misc
 uploads/
 *.local
+

@@ -1,4 +1,4 @@
-### **POST `/signup`**
+
 
 **Description:**
 Registers a new user. This creates an account in a pending state and sends an OTP to the user's email for verification.
@@ -40,6 +40,7 @@ Registers a new user. This creates an account in a pending state and sends an OT
 -----
 
 ### **POST `/confirmEmail`**
+POST /api/auth/confirmEmail
 
 **Description:**
 Confirms a new user's email address using the provided OTP.
@@ -71,6 +72,7 @@ Confirms a new user's email address using the provided OTP.
   * `400 Bad Request`: The provided OTP is not valid.
 
 -----
+POST /api/auth/login
 
 ### **POST `/login`**
 
@@ -102,6 +104,7 @@ Logs in an existing user with their email and password.
 
   * `404 Not Found`: User not found.
   * `400 Bad Request`: The provided password is not valid.
+PATCH /api/auth/forget-password
 
 -----
 
@@ -120,11 +123,7 @@ Initiates the password reset process by sending an OTP to the user's email.
 
 **Success Response (200 OK):**
 
-```json
-{
-  "message": "otp sent Success"
-}
-```
+r
 
 **Error Responses:**
 
